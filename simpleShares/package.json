@@ -1,0 +1,17 @@
+{
+  "name": "simpleShares",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . simpleShares --platform=darwin --arch=x64 --electron-version=1.0.0 --overwrite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron-prebuilt": "^1.4.13",
+    "request": "^3.10.8"
+  }
+}
