@@ -45,17 +45,17 @@ function newPrice(arr) {
   var currVolume = arr["Realtime Global Securities Quote"]["10. Volume (Current Trading Day)"];
   var lastUpdated = arr["Realtime Global Securities Quote"]["11. Last Updated"];
 
-  if (lastPrice < currentPrice && lastPrice != null) {
+  if (lastPrice < currentPrice) {
     var newElText = "▲ ";
     var wrap = document.createElement("span")
     wrap.className = "up";
   }
-  else if(lastPrice == currentPrice || lastPrice == null) {
+  else if(lastPrice == currentPrice) {
     var newElText = "— ";
     var wrap = document.createElement("span")
     wrap.className = "noChange";
   }
-  else if (lastPrice > currentPrice && lastPrice != null) {
+  else {
     var newElText = "▼ ";
     var wrap = document.createElement("span")
     wrap.className = "down";
@@ -162,20 +162,7 @@ function changeStock(currentId) {
   clickedStock = document.getElementById(currentId);
   console.log("Here is the stock object: " + clickedStock);
   if(clickedStock != null && currentId != "#") {
-
-    // Change the stock symbol
-
     changedSymbol = clickedStock.innerText;
     changeShareText(changedSymbol);
-
-    // Remove history
-
-    var history = document.getElementById("priceHistory")
-    for(i = 0; i < history.children.length; i++) {
-      history.children[0].remove();
-    }
   }
-
-  // Nullify lastPrice to avoid comparisons
-  lastPrice = null;
 }
