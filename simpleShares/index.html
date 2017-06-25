@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
-  
-  <body style="-webkit-app-region: drag">
+
+  <body style="-webkit-app-region: drag;">
     <div id="appContainer" style="width: 100%;">
 
       <form data-action="showPrompt">
@@ -29,6 +29,17 @@
         </div>
         <div class="the-price" id="price"></div>
         <div class="up-down" id="priceHistory"></div>
+        <div id="stockInfo" style="line-height: 40%;">
+          <h4 id="exchangeName"></h4>
+          <h4 id="openPrice"></h4>
+          <h4 id="highPrice"></h4>
+          <h4 id="lowPrice"></h4>
+          <h4 id="prevClosePrice"></h4>
+          <h4 id="priceChange"></h4>
+          <h4 id="priceChangePercent"></h4>
+          <h4 id="currVolume"></h4>
+          <h4 id="lastUpdated"></h4>
+        </div>
       </div>
     </div>
 

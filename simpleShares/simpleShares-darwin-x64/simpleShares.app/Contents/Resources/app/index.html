@@ -2,125 +2,47 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
-  <style>
-    body {
-      background: black;
-      color: white;
-      text-align: center;
-      font-family: 'Roboto', 'arial', sans-serif;
-    }
-    .the-price {
-      font-size: 35px;
-    }
-    .up {
-      color: green;
-    }
-    .noChange {
-      color: grey;
-    }
-    .down {
-      color: red;
-    }
-  </style>
-  <body style="-webkit-app-region: drag">
-    <div id="container"></div>
-    <div id="stockText">
-      <h3 id="stockName">Current Share Price: AAL</h3>
+
+  <body style="-webkit-app-region: drag;">
+    <div id="appContainer" style="width: 100%;">
+
+      <form data-action="showPrompt">
+        <div id="searchListContainer" style="width: 50%; float: left;">
+          <div id="searchContainer" style="float: left; width: 84.5%; display: block; margin-top: 15px;">
+            <input type="text" id="stockInput" onkeyup="searchFunction()" placeholder="Search for a NASDAQ Symbol">
+          </div>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <div id="listContainer" style="float: left; width: 100%;">
+            <nav>
+              <ul id="stockUL"></ul>
+            </nav>
+          </div>
+        </div>
+      </form>
+
+      <div id="stockContainer" style="width: 50%; float: right;">
+        <div id="stockText">
+          <h3 id="stockName">Current Share Price: AAL</h3>
+        </div>
+        <div class="the-price" id="price"></div>
+        <div class="up-down" id="priceHistory"></div>
+        <div id="stockInfo" style="line-height: 40%;">
+          <h4 id="exchangeName"></h4>
+          <h4 id="openPrice"></h4>
+          <h4 id="highPrice"></h4>
+          <h4 id="lowPrice"></h4>
+          <h4 id="prevClosePrice"></h4>
+          <h4 id="priceChange"></h4>
+          <h4 id="priceChangePercent"></h4>
+          <h4 id="currVolume"></h4>
+          <h4 id="lastUpdated"></h4>
+        </div>
+      </div>
     </div>
-    <div class="the-price" id="price"></div>
-    <div class="up-down" id="priceHistory">
 
-    </div>
-    <script type="text/javascript">
-
-      var alphaVantageAPIKey = "01SKIP2HAYO24I5L";
-
-      var div = document.querySelector("#container"),
-      frag = document.createDocumentFragment(),
-      select = document.createElement("select");
-      select.setAttribute("id", "selectSymbol")
-      var currentSymbol;
-      var nasdaq_100 = readTextFile("nasdaq_100.txt");
-      if (nasdaq_100.length > 0) {
-        select.options.add( new Option(nasdaq_100[0], nasdaq_100[0], true, true) );
-        currentSymbol = nasdaq_100[0];
-        for(i = 1; i < nasdaq_100.length; i++) {
-          select.options.add( new Option(nasdaq_100[i], nasdaq_100[i]) );
-        }
-      }
-      frag.appendChild(select);
-      div.appendChild(frag);
-
-      var request = require('request')
-      setInterval(function() {
-        var currentOption = document.getElementById("selectSymbol").value
-        if(currentOption != currentSymbol) {
-          currentSymbol = currentOption
-          var oldStock = document.getElementById("stockName")
-          oldStock.innerText = "Current Share Price: " + currentSymbol;
-        }
-        var url = "http://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + currentSymbol + "&apikey=" + alphaVantageAPIKey;
-        request(url, function(error, response, body) {
-          // body = body.slice(3);
-          body = JSON.parse(body);
-          console.log(body)
-          newPrice(body);
-        });
-      }, 1000);
-
-      var lastPrice;
-
-      function newPrice(arr) {
-        var history = document.getElementById("priceHistory")
-        currentPrice = arr["Realtime Global Securities Quote"]["03. Latest Price"];
-        if (lastPrice < currentPrice) {
-          var newElText = "▲ ";
-          var wrap = document.createElement("span")
-          wrap.className = "up";
-        }
-        else if(lastPrice == currentPrice) {
-          var newElText = "— ";
-          var wrap = document.createElement("span")
-          wrap.className = "noChange";
-        }
-        else {
-          var newElText = "▼ ";
-          var wrap = document.createElement("span")
-          wrap.className = "down";
-        }
-        history.appendChild(wrap);
-        var textNode = document.createTextNode(newElText);
-        wrap.appendChild(textNode);
-        var nodeList = history.getElementsByTagName("SPAN").length;
-        if (nodeList == 6) {
-          history.children[0].remove()
-        }
-        document.getElementById("price").innerHTML = currentPrice;
-        lastPrice = currentPrice;
-      }
-
-      function readTextFile(file) {
-        var rawFile = new XMLHttpRequest();
-        var allText;
-        rawFile.open("GET", file, false);
-        rawFile.onreadystatechange = function ()
-        {
-            if(rawFile.readyState === 4)
-            {
-                if(rawFile.status === 200 || rawFile.status == 0)
-                {
-                    allText = rawFile.responseText;
-                    allText = allText.split("  ")
-                    // for(i = 0; i < allText.length; i++) {
-                    //   alert(allText[i]);
-                    // }
-                }
-            }
-        }
-        rawFile.send(null);
-        return allText;
-    }
-    </script>
+    <script type="text/javascript" src="list.js"></script>
   </body>
 </html>
