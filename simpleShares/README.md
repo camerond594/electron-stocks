@@ -3,8 +3,11 @@ An Electron-based stock widget that allows you to choose which of the NASDAQ 100
 Current Features:
 - Select which of the NASDAQ 100 to view via the list
 - Shows current share price at intervals of 2 seconds
+- Much information available about the shares (e.g. dayStartPrice, dayHighPrice, etc..)
 - Provides a visual indicator of whether the price went up or down
 - Able to search the NASDAQ 100
 
 Future Features:
-- Include more info on the shares (e.g. dayStartPrice, dayHighPrice, etc..)
+- Be able to search other markets besides NASDAQ
+- Improve search feature
+- Style entire application
